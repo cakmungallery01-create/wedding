@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Abdul & Syahrillah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+font-family:'SF Pro Display',sans-serif;
+background:#111;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* OPENING */
+
+#opening{
+position:fixed;
+inset:0;
+background:
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999999;
+color:white;
+text-align:center;
+padding:30px;
+transition:1s;
+}
+
+#opening h1{
+font-size:42px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+#opening p{
+opacity:.9;
+font-size:16px;
+}
+
+#openBtn{
+margin-top:28px;
+padding:15px 34px;
+border:none;
+border-radius:999px;
+background:white;
+color:black;
+font-weight:600;
+font-size:15px;
+cursor:pointer;
+transition:.25s;
+}
+
+#openBtn:active{
+transform:scale(.95);
+}
+
+/* PHONE */
+
+.phone{
+width:100%;
+max-width:430px;
+height:100vh;
+background:#000;
+position:relative;
+overflow:hidden;
+display:none;
+border-radius:42px;
+border:10px solid #111;
+box-shadow:0 0 50px rgba(0,0,0,.7);
+}
+
+/* dynamic island */
+
+.phone::before{
+content:'';
+position:absolute;
+top:12px;
+left:50%;
+transform:translateX(-50%);
+width:126px;
+height:34px;
+background:#000;
+border-radius:40px;
+z-index:9999;
+}
+
+/* HEADER */
+
+.header{
+height:92px;
+padding:14px 16px 10px;
+background:rgba(20,20,20,.85);
+backdrop-filter:blur(25px);
+border-bottom:1px solid rgba(255,255,255,.05);
+color:white;
+position:relative;
+z-index:10;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:14px;
+font-weight:600;
+padding:0 6px;
+margin-bottom:14px;
+}
+
+.icons{
+font-size:12px;
+opacity:.9;
+letter-spacing:1px;
+}
+
+.header-content{
+display:flex;
+align-items:center;
+}
+
+.profile{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#2c2c2e;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:20px;
+margin-right:12px;
+}
+
+.name{
+font-size:16px;
+font-weight:600;
+}
+
+.status{
+font-size:12px;
+color:#aaa;
+margin-top:1px;
+}
+
+/* CHAT */
+
+.chat-area{
+height:calc(100vh - 92px);
+overflow-y:auto;
+padding:16px 12px 140px;
+
+background:
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+url('https://images.unsplash.com/photo-1516589091380-5d8e87df6999?q=80&w=1200&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+
+scroll-behavior:smooth;
+}
+
+.chat-area::-webkit-scrollbar{
+display:none;
+}
+
+.message{
+max-width:78%;
+padding:10px 14px 6px;
+margin-bottom:8px;
+font-size:15px;
+line-height:1.45;
+display:none;
+animation:show .35s ease;
+position:relative;
+word-wrap:break-word;
+}
+
+.sent{
+margin-left:auto;
+background:#0A84FF;
+color:white;
+border-radius:22px 22px 6px 22px;
+box-shadow:0 3px 12px rgba(10,132,255,.25);
+}
+
+.received{
+background:#2c2c2e;
+color:white;
+border-radius:22px 22px 22px 6px;
+}
+
+.message-time{
+font-size:10px;
+opacity:.72;
+text-align:right;
+margin-top:4px;
+}
+
+/* typing */
+
+.typing{
+display:none;
+background:#2c2c2e;
+width:74px;
+padding:10px 14px;
+border-radius:20px;
+margin-bottom:10px;
+animation:show .3s ease;
+}
+
+.dot{
+width:7px;
+height:7px;
+background:#aaa;
+border-radius:50%;
+display:inline-block;
+animation:blink 1.2s infinite;
+margin-right:3px;
+}
+
+.dot:nth-child(2){
+animation-delay:.2s;
+}
+
+.dot:nth-child(3){
+animation-delay:.4s;
+}
+
+@keyframes blink{
+0%{opacity:.25;transform:translateY(0)}
+50%{opacity:1;transform:translateY(-2px)}
+100%{opacity:.25;transform:translateY(0)}
+}
+
+@keyframes show{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* INVITATION */
+
+.invitation{
+display:none;
+background:rgba(255,255,255,.97);
+backdrop-filter:blur(30px);
+padding:32px 28px;
+border-radius:34px;
+text-align:center;
+margin-top:24px;
+animation:show .8s ease;
+box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.invitation h1{
+font-size:34px;
+color:#111;
+margin-bottom:12px;
+}
+
+.invitation p{
+color:#333;
+line-height:1.8;
+font-size:15px;
+}
+
+.button{
+display:inline-block;
+margin-top:22px;
+padding:14px 24px;
+border-radius:999px;
+background:#111;
+color:white;
+text-decoration:none;
+font-size:14px;
+font-weight:600;
+}
+
+.fade{
+margin-top:16px;
+font-size:13px;
+opacity:.7;
+font-style:italic;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- OPENING -->
+
+<div id="opening">
+
+<h1>Abdul & Syahrillah</h1>
+<p>A Wedding Invitation</p>
+
+<button id="openBtn">
+Buka Undangan
+</button>
+
+</div>
+
+<!-- PHONE -->
+
+<div class="phone" id="phone">
+
+<div class="header">
+
+<div class="topbar">
+<div>23.09</div>
+<div class="icons">📶 5G 🔋</div>
+</div>
+
+<div class="header-content">
+
+<div class="profile">💍</div>
+
+<div>
+<div class="name">Syahrillah ❤️</div>
+<div class="status">online</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="chat-area" id="chatArea">
+
+<!-- CHAT FLOW -->
+
+<div class="message sent">
+kamu belum tidur?
+<div class="message-time">23.09</div>
+</div>
+
+<div class="typing">
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
+
+<div class="message received">
+belum hehe, kenapa?
+<div class="message-time">23.09</div>
+</div>
+
+<div class="message sent">
+aku lagi mikir
+<div class="message-time">23.10</div>
+</div>
+
+<div class="typing">
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
+
+<div class="message received">
+tumben serius 😭
+<div class="message-time">23.10</div>
+</div>
+
+<div class="message sent">
+ga kerasa ya kita udah sejauh ini
+<div class="message-time">23.10</div>
+</div>
+
+<div class="message received">
+iyaa 🥺
+<div class="message-time">23.10</div>
+</div>
+
+<div class="message sent">
+makasih ya udah bertahan sejauh ini
+<div class="message-time">23.11</div>
+</div>
+
+<div class="typing">
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
+
+<div class="message received">
+jadi terharu :(
+<div class="message-time">23.11</div>
+</div>
+
+<div class="message sent">
+jadi...
+<div class="message-time">23.11</div>
+</div>
+
+<div class="message sent">
+lanjut hidup bareng terus yuk
+<div class="message-time">23.11</div>
+</div>
+
+<div class="typing">
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
+
+<div class="message received">
+ke pelaminan?
+<div class="message-time">23.12</div>
+</div>
+
+<div class="message sent">
+iya 🤍
+<div class="message-time">23.12</div>
+</div>
+
+<!-- INVITATION -->
+
+<div class="invitation" id="invite">
+
+<h1>Abdul & Syahrillah</h1>
+
+<p>
+Dengan penuh kebahagiaan,<br>
+kami mengundang Anda<br>
+untuk hadir di hari pernikahan kami.
+</p>
+
+<br>
+
+<p>
+<strong>Selasa, 20 Juli 2027</strong><br>
+08.00 WIB
+</p>
+
+<br>
+
+<p>
+📍 Kediaman Mempelai Wanita<br>
+Jl. Penamas No.32,<br>
+Sonosari, Kebonagung,<br>
+Pakisaji, Malang
+</p>
+
+<a href="https://maps.google.com" class="button" target="_blank">
+Buka Maps
+</a>
+
+<div class="fade">
+“And suddenly, all the love songs were about you.”
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio id="chatSound" preload="auto">
+<source src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="music" preload="auto" loop playsinline>
+<source src="https://files.catbox.moe/0wfhli.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const openBtn = document.getElementById('openBtn');
+const opening = document.getElementById('opening');
+const phone = document.getElementById('phone');
+
+const chatArea = document.getElementById('chatArea');
+const messages = document.querySelectorAll('.message');
+const typings = document.querySelectorAll('.typing');
+
+const invite = document.getElementById('invite');
+
+const chatSound = document.getElementById('chatSound');
+const music = document.getElementById('music');
+
+openBtn.addEventListener('click', () => {
+
+phone.style.display = 'block';
+
+setTimeout(()=>{
+opening.style.opacity='0';
+},100);
+
+setTimeout(()=>{
+opening.style.display='none';
+},800);
+
+/* CHAT FLOW */
+
+let delay = 1000;
+
+messages.forEach((msg,index)=>{
+
+/* TYPING */
+
+if(index > 0){
+
+setTimeout(()=>{
+
+if(typings[index-1]){
+
+typings[index-1].style.display='block';
+
+chatArea.scrollTop = chatArea.scrollHeight;
+
+}
+
+},delay - 900);
+
+setTimeout(()=>{
+
+if(typings[index-1]){
+
+typings[index-1].style.display='none';
+
+}
+
+},delay - 200);
+
+}
+
+/* MESSAGE */
+
+setTimeout(()=>{
+
+msg.style.display='block';
+
+/* SOUND CHAT */
+
+chatSound.currentTime = 0;
+
+chatSound.play().catch(()=>{});
+
+chatArea.scrollTop = chatArea.scrollHeight;
+
+},delay);
+
+delay += 1900;
+
+});
+
+/* SHOW INVITATION */
+
+setTimeout(async ()=>{
+
+invite.style.display='block';
+
+chatArea.scrollTop = chatArea.scrollHeight;
+
+/* MUSIC START AFTER INVITATION */
+
+music.volume = 0;
+
+try{
+
+await music.play();
+
+let vol = 0;
+
+const fadeMusic = setInterval(()=>{
+
+vol += 0.02;
+
+if(vol >= 0.45){
+
+vol = 0.45;
+
+clearInterval(fadeMusic);
+
+}
+
+music.volume = vol;
+
+},120);
+
+}catch(err){
+
+console.log(err);
+
+}
+
+},delay + 1200);
+
+});
+
+</script>
+
+</body>
+</html>
